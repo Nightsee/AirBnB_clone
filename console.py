@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         """
-            delete a class instance of given id
+        delete a class instance of given id
         """
         args = parse(line)
         objdict = storage.all()
@@ -191,15 +191,15 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def emptyLine(self):
-        """ do nothing upon recieving an empty line """
+        """do nothing upon recieving an empty line"""
         pass
 
     def do_quit(self, arg):
-        """ quit command to exit the program """
+        """quit command to exit the program"""
         return True
 
     def do_EOF(self, arg):
-        """ end of file signal to quit the program """
+        """end of file signal to quit the program"""
         print("")
         return True
 
