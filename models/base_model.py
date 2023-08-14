@@ -32,7 +32,7 @@ class BaseModel:
 
     def __str__(self):
         """ return class name, id, and dictionary """
-        return (f'[{}] ({}) {}'.formate(self.__class__.__name__, self.id, self.__dict__))
+        return ('[{}] ({}) {}'.formate(self.__class__.__name__, self.id, self.__dict__))
 
     def save(self):
         """ saves the self """
