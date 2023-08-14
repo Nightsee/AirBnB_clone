@@ -33,7 +33,7 @@ class BaseModel:
 
     def __str__(self):
         """ return class name, id, and dictionary """
-        return ('[{}] ({}) {}'.formate
+        return ('[{}] ({}) {}'.format
                 (self.__class__.__name__, self.id, self.__dict__))
 
     def save(self):
@@ -41,9 +41,9 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.save()
 
-    def to_dic(self):
+    def to_dict(self):
         """ return a dic """
-        dic = self.__dic__().copy()
+        dic = self.__dict__.copy()
         dic["updated_at"] = self.updated_at.isoformat()
         dic["created_at"] = self.created_at.isoformat()
         dic["__class__"] = self.__class__.__name__
