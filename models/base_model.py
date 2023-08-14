@@ -8,6 +8,7 @@ this is the parent class to all other classes in the airbnb project
 """
 dateFormat = '%Y-%m-%dT%H:%M:%S.%f'
 
+
 class BaseModel:
     """ parent class, containing common methods and attributes """
     def __init__(self, *args, **kwargs):
@@ -15,9 +16,11 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if "created_at" == key:
-                    self.created_at = datetime.strptime(kwargs["created_at"], dateFormat)
+                    self.created_at = datetime.strptime(kwargs["cr
+                        eated_at"], dateFormat)
                 elif "updated_at" == key:
-                    self.updated_at = datetime.strptime(kwargs["updated_at"], dateFormat)
+                    self.updated_at = datetime.strptime(kwargs["
+                        updated_at"], dateFormat)
                 elif "__class__" == key:
                     pass
         else:
