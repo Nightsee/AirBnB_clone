@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-HBNBCommand class used to make a command line interpreter
+HBNBCommand class used to make a command line interpretr
 """
 import re
 from shlex import split
