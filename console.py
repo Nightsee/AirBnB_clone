@@ -74,7 +74,6 @@ class HBNBCommand(cmd.Cmd):
         create a new class instance with given
         key value and prints the id in return
         """
-        instance = arg()
         try:
             if not arg:
                 raise SyntaxError()
