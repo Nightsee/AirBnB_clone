@@ -1,72 +1,60 @@
 #!/usr/bin/python3
-"""
-module containing FileStorage used for file storage
-"""
+'''AirBnB clone project File Storage'''
 import json
-import models
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
+    """ This is a storage engine for AirBnB clone project
+    Class Methods:
+        all: Returns the object
+        new: updates the dictionary id
+        save: Serializes, or converts Python objects into JSON strings
+        reload: Deserializes, or converts JSON strings into Python objects.
+    Class Attributes:
+        __file_path (str): The name of the file to save objects to.
+        __objects (dict): A dictionary of instantiated objects.
+        class_dict (dict): A dictionary of all the classes.
     """
-    serializes and deserializes instances to and from JSON file
-    saved into file_path
 
-    """
-
-    __file_path = "file.json"
+    __file_path = 'file.json'
     __objects = {}
+    class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
+                  "Amenity": Amenity, "City": City, "Review": Review,
+                  "State": State}
 
-    def all(self, cls=None):
-        """
-        returns a dictionary containing every object
-        """
-        if (not cls):
-            return self.__objects
-        result = {}
-        for key in self.__objects.keys():
-            if (key.split(".")[0] == cls.__name__):
-                result.update({key: self.__objects[key]})
-        return result
+    def all(self):
+        '''Return dictionary of <class>.<id> : object instance'''
+        return self.__objects
 
     def new(self, obj):
-        """
-        creates a new object and saves it to __objects
-        """
-        key = "{}.{}".format(type(obj).__name__, obj.id)
-        self.__objects[key] = obj
+        '''Set new __objects to existing dictionary of instances'''
+        if obj:
+            key = '{}.{}'.format(obj.__class__.__name__, obj.id)
+            self.__objects[key] = obj
 
     def save(self):
-        """
-        update the JSON file to reflect any change in the objects
-        """
-        temp = {}
-        for id, obj in self.__objects.items():
-            temp[id] = obj.to_dict()
-        with open(self.__file_path, "w") as json_file:
-            json.dump(temp, json_file)
+        """Save/serialize obj dictionaries to json file"""
+        obj_dict = {}
+
+        for key, obj in self.__objects.items():
+            obj_dict[key] = obj.to_dict()
+        with open(self.__file_path, 'w', encoding="UTF-8") as f:
+            json.dump(obj_dict, f)
 
     def reload(self):
-        """
-        update __objects dict to restore previously created objects
-        """
+        """Deserialize/convert obj dicts back to instances, if it exists"""
         try:
-            with open(self.__file_path, "r") as json_file:
-                temp = json.load(json_file)
-            for id, dict in temp.items():
-                temp_instance = models.dummy_classes[dict["__class__"]](**dict)
-                self.__objects[id] = temp_instance
-        except:
+            with open(self.__file_path, 'r', encoding="UTF-8") as f:
+                new_obj_dict = json.load(f)
+            for key, value in new_obj_dict.items():
+                obj = self.class_dict[value['__class__']](**value)
+                self.__objects[key] = obj
+        except FileNotFoundError:
             pass
-
-    def close(self):
-        """display our HBNB data
-        """
-        self.reload()
-
-    def delete(self, obj=None):
-        """
-            delete obj from __objects if it’s inside - if obj is None,
-            the method should not do anything
-        """
-        if (obj):
-            self.__objects.pop("{}.{}".format(type(obj).__name__, obj.id))
