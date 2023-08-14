@@ -10,9 +10,10 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+
 class HBNBCommand(cmd.Cmd):
-    """ 
-    HBNBCommand class inherits from the cmd class 
+    """
+    HBNBCommand class inherits from the cmd class
     used to simulate a command line interpreter with python
     """
     prompt = "(hbnb) "
@@ -25,9 +26,12 @@ class HBNBCommand(cmd.Cmd):
         "City",
         "Amenity"
     }
-    
+
     def do_create(self, arg):
-        """ create a new class instance with given key value and prints the id in return """
+        """
+        create a new class instance with given
+        key value and prints the id in return
+        """
         instance = arg()
         try:
             if not arg:
@@ -59,7 +63,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """ display the string representation of a class instance of a given id """
+        """
+        display the string representation of a
+        class instance of a given id
+        """
         arg = parse(arg)
         objdict = storage.all()
         if len(arg) == 0:
@@ -68,10 +75,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(arg) == 1:
             print("** instance id missing **")
-        elif f"{{arg[0]}}.{{arg[1]}}" not in objdict:
+        elif "{}.{}".format(arg[0], arg[1]) not in objdict:
             print("** no instance found **")
         else:
-            print(objdict[f"{{arg[0]}}.{{arg[1]}}"])
+            print(objdict["{}.{}".format(arg[0], arg[1])])
 
     def do_destroy(self, line):
         """
@@ -85,14 +92,18 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif f"{{args[0]}}.{{args[1]}}" not in objdict:
+        elif "{}.{}".format(args[0], arg[1]) not in objdict:
             print("** no instance found **")
         else:
-            del objdict[f"{{args[0]}}.{{args[1]}}"]
+            del objdict[f"{args[0]}.{args[1]}"]
             storage.save()
 
     def do_all(self, line):
-        """ display string representation of all instances of a given class . if no class specifiied displays all instantiated ojects . """
+        """
+        display string representation of all instances of
+        a given class . if no class specifiied displays
+        all instantiated ojects.
+        """
         args = parse(line)
         if len(args) > 0 and args[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
@@ -118,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         if len(args) == 1:
             print("** instance id missing **")
-        if f"{{args[0]}}.{{args[1]}}" not in objdict.values():
+        if f"{args[0]}.{args[1]}" not in objdict.values():
             print("** no instance found **")
         if len(args) == 2:
             print("** attribute name missing **")
@@ -129,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
 
         if len(args) == 4:
-            obj_to_update = objdict[f"{{args[0]}}.{{arg[1]}}"]
+            obj_to_update = objdict[f"{args[0]}.{arg[1]}"]
             if args[2] in obj_to_update.__class__.__dict__.keys():
                 value_type = type(obj_to_update.__class__.__dic__[args[2]])
                 obj_to_update.__dict__[args[2]] = value_type(args[3])
@@ -137,7 +148,6 @@ class HBNBCommand(cmd.Cmd):
                 obj_to_update.__dict__[args[2]] = args[3]
 
         storage.save()
-
 
     def emptyLine(self):
         """ do nothing upon recieving an empty line """
@@ -151,7 +161,6 @@ class HBNBCommand(cmd.Cmd):
         """ end of file signal to quit the program """
         print("")
         return True
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
