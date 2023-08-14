@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""  """
+"""
+HBNBCommand class used to make a command line interpreter
+"""
 import re
 from shlex import split
 import cmd
