@@ -11,16 +11,17 @@ dateFormat = '%Y-%m-%dT%H:%M:%S.%f'
 
 class BaseModel:
     """ parent class, containing common methods and attributes """
+    date_format = '%Y-%m-%dT%H:%M:%S.%f'
     def __init__(self, *args, **kwargs):
         """ intialize attributes """
         if kwargs:
             for key, value in kwargs.items():
                 if "created_at" == key:
                     self.created_at = datetime.strptime(kwargs["cr
-                        eated_at"], dateFormat)
+                        eated_at"], date_format)
                 elif "updated_at" == key:
                     self.updated_at = datetime.strptime(kwargs["
-                        updated_at"], dateFormat)
+                        updated_at"], date_format)
                 elif "__class__" == key:
                     pass
         else:
